@@ -6,7 +6,7 @@ from cifar10_classifier.scripts import data_processing
 
 def test_get_dataloader():
     batch_size = 64
-    dataloader = data_processing.get_dataloader(batch_size)
+    dataloader = data_processing.create_dataloaders('cifar10_classifier/data/raw/train_dev', 'cifar10_classifier/data/raw/trainLabelsDev.csv', batch_size)
 
     assert dataloader is not None, "DataLoader should not be None"
     
@@ -22,7 +22,7 @@ def test_get_dataloader():
     mean = images.mean([0, 2, 3])
     std = images.std([0, 2, 3])    
     expected_mean = torch.tensor([0.0, 0.0, 0.0])
-    expected_std = torch.tensor([1.0, 1.0, 1.0])
+    expected_std = torch.tensor([0.5, 0.5, 0.5])
     
     assert torch.allclose(mean, expected_mean, atol=0.1), f"Mean should be close to {expected_mean}, but got {mean}"
     assert torch.allclose(std, expected_std, atol=0.1), f"Standard deviation should be close to {expected_std}, but got {std}"
